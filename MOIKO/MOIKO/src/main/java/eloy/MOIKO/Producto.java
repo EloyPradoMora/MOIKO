@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.regex.Pattern;
 
 public class Producto {
     String codigo;
@@ -49,7 +50,9 @@ public class Producto {
     }
 
     public boolean isMailValido() {
-        return false;
+        if (this.mail == null) return false;
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+        return Pattern.compile(emailRegex).matcher(this.mail).matches();
     }
 
     public boolean verificarRutEstructura(){

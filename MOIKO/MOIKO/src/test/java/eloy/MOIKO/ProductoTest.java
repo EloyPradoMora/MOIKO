@@ -88,7 +88,7 @@ public class ProductoTest {
     @Test
     void testEmailSinArroba(){
         Producto producto = new Producto("COD", "Jabón", 10, 500, "20.645.322-2", "testmail.com");
-        assertEquals(2, producto.getMail().split("@").length);
+        assertNotEquals(2, producto.getMail().split("@").length);
     }
 
     @Test
