@@ -1,5 +1,7 @@
 package eloy.MOIKO;
 
+import java.time.LocalDateTime;
+
 public class Producto {
     String codigo;
     String nombre;
@@ -18,7 +20,17 @@ public class Producto {
     }
 
     public String createCode(){
-        return null;
+        String codigoCorrecto = String.valueOf(nombre.charAt(0)).toUpperCase();
+        String fechaHoraRaw = LocalDateTime.now().toString();
+        String trimmedTime = fechaHoraRaw.substring(2);
+        String refinedTime = trimmedTime.split("T")[0].split("-")[2];
+        refinedTime += trimmedTime.split("T")[0].split("-")[1];
+        refinedTime += trimmedTime.split("T")[0].split("-")[0];
+
+        refinedTime += trimmedTime.split("T")[1].split(":")[0];
+        refinedTime += trimmedTime.split("T")[1].split(":")[1];
+        codigoCorrecto += refinedTime;
+        return codigoCorrecto;
     }
 
     public boolean isNombreValido() {
