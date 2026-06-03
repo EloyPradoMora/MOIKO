@@ -70,7 +70,20 @@ public class ProductoTest {
     }
 
     @Test
-    void testEmail(){
+    void testEmailSinArroba(){
+        Producto producto = new Producto("COD", "Jabón", 10, 500, "20.645.322-2", "testmail.com");
         assertEquals(2, p.getMail().split("@").length());
+    }
+
+    @Test
+    void testMailFormatoCorrecto() {
+        Producto producto = new Producto("COD", "Jabón", 10, 500, "20.645.322-2", "test@mail.com");
+        assertTrue(producto.isMailValido());
+    }
+
+    @Test
+    void testMailFormatoIncorrecto() {
+        Producto producto = new Producto("COD", "Jabón", 10, 500, "20.645.322-2", "test@com");
+        assertFalse(producto.isMailValido());
     }
 }
