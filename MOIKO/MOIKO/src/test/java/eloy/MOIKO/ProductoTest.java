@@ -8,8 +8,7 @@ import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductoTest {
     Producto p = new Producto();
@@ -59,14 +58,15 @@ public class ProductoTest {
     }
 
     @Test
-    void testPrecio(){
-        Assertions.assertTrue(p.getPrecio() instanceof Integer);
+    void testRutFormatoInvalido() {
+        Producto producto = new Producto("COD", "Jabón", 10, 500, "20.645.322-3", "test@mail.com");
+        assertFalse(producto.verificarRutEstructura());
     }
 
     @Test
-    void testRUT(){
-        Assertions.assertTrue(p.verificarRut("20645322-2"));
-        assertFalse(p.verificarRut("20645322-3"));
+    void testRutExisteEnCsv() {
+        Producto producto = new Producto("COD", "Jabón", 10, 500, "20.645.322-2", "test@mail.com");
+        assertTrue(producto.verificarRutEnProveedorCSV());
     }
 
     @Test
