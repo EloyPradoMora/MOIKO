@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductoTest {
-    Producto p = new Producto();
     @BeforeAll
     static void setUp(){
         System.out.println("@BeforeAll executed");
@@ -34,13 +33,13 @@ public class ProductoTest {
     void testNombreDe30Caracteres(){
         String nombre = "A".repeat(30);
         Producto producto = new Producto("COD", nombre, 10, 500, "16.827.524-1", "test@mail.com");
-        Assertions.assertTrue(producto.getNombre().length <= 30);
+        Assertions.assertTrue(producto.getNombre().length() <= 30);
     }
 
     @Test
     void testNombreCorto(){
         Producto producto = new Producto("COD", "Pc del Eloy", 10, 500, "16.827.524-1", "eloy@ufro.com");
-        Assertions.assertTrue(producto.getNombre().length <= 30);
+        Assertions.assertTrue(producto.getNombre().length() <= 30);
     }
 
     @Test
@@ -72,7 +71,7 @@ public class ProductoTest {
     @Test
     void testEmailSinArroba(){
         Producto producto = new Producto("COD", "Jabón", 10, 500, "20.645.322-2", "testmail.com");
-        assertEquals(2, p.getMail().split("@").length());
+        assertEquals(2, producto.getMail().split("@").length);
     }
 
     @Test
