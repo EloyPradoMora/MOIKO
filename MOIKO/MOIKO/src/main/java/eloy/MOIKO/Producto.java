@@ -50,10 +50,46 @@ public class Producto {
     }
 
     public boolean verificarRutEstructura(){
-        return false;
+        if (rut == null || !rut.contains("-")) {
+            return false;
+        }
+        String rutLimpio = rut.replace(".", "").toUpperCase();
+        String[] rutParts = rutLimpio.split("-");
+        if (rutParts.length != 2) {
+            return false;
+        }
+        String numerosDeRut = rutParts[0];
+        char dvIngresado = rutParts[1].charAt(0);
+
+        int rutNumerico = Integer.parseInt(numerosDeRut);
+        char dvEsperado = calcularDigitoVerificador(rutNumerico);
+        return dvIngresado == dvEsperado;
+    }
+
+    public char calcularDigitoVerificador(int rutNumerico){
+        int suma = 0;
+        int multiplicador = 2;
+
+        while (rutNumerico > 0) {
+            suma += (rutNumerico % 10) * multiplicador;
+            multiplicador = (multiplicador == 7) ? 2 : multiplicador + 1;
+            rutNumerico /= 10;
+        }
+
+        int resto = suma % 11;
+        int dvCalculado = 11 - resto;
+
+        if (dvCalculado == 11) {
+            return '0';
+        } else if (dvCalculado == 10) {
+            return 'K';
+        } else {
+            return Character.forDigit(dvCalculado, 10);
+        }
     }
 
     public boolean verificarRutEnProveedorCSV(){
+        if (!verificarRutEstructura()) return false;
         return false;
     }
 
