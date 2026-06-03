@@ -38,11 +38,11 @@ public class Producto {
     }
 
     public boolean isStockValido() {
-        return false;
+        return stock >= 0;
     }
 
     public boolean isPrecioValido() {
-        return false;
+        return precio >= 0;
     }
 
     public boolean isMailValido() {
