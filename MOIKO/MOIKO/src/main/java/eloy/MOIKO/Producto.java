@@ -34,7 +34,7 @@ public class Producto {
     }
 
     public boolean isNombreValido() {
-        return false;
+        return nombre.length() <= 30;
     }
 
     public boolean isStockValido() {
