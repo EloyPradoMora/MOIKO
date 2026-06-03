@@ -3,10 +3,15 @@ package eloy.MOIKO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +20,9 @@ public class ProductoTest {
     static void setUp(){
         System.out.println("@BeforeAll executed");
     }
+
+    @TempDir
+    Path tempDir;
 
     @Test
     void testCodigo(){
@@ -63,9 +71,18 @@ public class ProductoTest {
     }
 
     @Test
-    void testRutExisteEnCsv() {
+    void testRutExisteEnCsv() throws IOException {
+        Path rutaCsvTemporal = tempDir.resolve("proveedores_prueba.csv");
+        List<String> lineasCsv = List.of(
+                "20.645.322-2, Proveedor de MOIKO",
+                "16.827.524-1, Proveedor Gimli y Cia."
+        );
+        Files.write(rutaCsvTemporal, lineasCsv);
         Producto producto = new Producto("COD", "Jabón", 10, 500, "20.645.322-2", "test@mail.com");
-        assertTrue(producto.verificarRutEnProveedorCSV());
+
+        String rutaAbsoluta = rutaCsvTemporal.toAbsolutePath().toString();
+
+        assertTrue(producto.verificarRutEnProveedorCSV(rutaAbsoluta));
     }
 
     @Test
