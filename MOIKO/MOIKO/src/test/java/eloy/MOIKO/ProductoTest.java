@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class ProductoTest {
     Producto p = new Producto();
@@ -31,24 +32,39 @@ public class ProductoTest {
     }
 
     @Test
-    void testNombre(){
-        Assertions.assertTrue(p.getNombre.lenth <= 30);
+    void testNombreDe30Caracteres(){
+        String nombre = "A".repeat(30);
+        Producto producto = new Producto("COD", nombre, 10, 500, "16.827.524-1", "test@mail.com");
+        Assertions.assertTrue(producto.getNombre().length <= 30);
+    }
+
+    @Test
+    void testNombreCorto(){
+        Producto producto = new Producto("COD", "Pc del Eloy", 10, 500, "16.827.524-1", "eloy@ufro.com");
+        Assertions.assertTrue(producto.getNombre().length <= 30);
+    }
+
+    @Test
+    void testNombreLargo() {
+        String nombre = "A".repeat(31);
+        Producto producto = new Producto("COD", nombre, 10, 500, "16.827.524-1", "test@mail.com");
+        assertFalse(producto.isNombreValido());
     }
 
     @Test
     void testStock(){
-        Assertions.assertTrue(p.getStock instanceof Integer);
+        Assertions.assertTrue(p.getStock() instanceof Integer);
     }
 
     @Test
     void testPrecio(){
-        Assertions.assertTrue(p.getPrecio instanceof Integer);
+        Assertions.assertTrue(p.getPrecio() instanceof Integer);
     }
 
     @Test
     void testRUT(){
         Assertions.assertTrue(p.verificarRut("20645322-2"));
-        Assertions.assertFalse(p.verificarRut("20645322-3"));
+        assertFalse(p.verificarRut("20645322-3"));
     }
 
     @Test
