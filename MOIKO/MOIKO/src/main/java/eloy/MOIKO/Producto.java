@@ -1,5 +1,8 @@
 package eloy.MOIKO;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class Producto {
@@ -88,8 +91,24 @@ public class Producto {
         }
     }
 
-    public boolean verificarRutEnProveedorCSV(){
+    public boolean verificarRutEnProveedorCSV(String rutaArchivoCsv){
         if (!verificarRutEstructura()) return false;
+
+        String linea;
+        try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivoCsv))){
+            while ((linea = br.readLine()) != null){
+                String rutCSV = linea.split(",")[0].trim();
+                String rutCsvLimpio = rutCSV.replace(".", "").replace("-", "");
+                String rutObjetoLimpio = this.rut.replace(".", "").replace("-", "");
+
+                if (rutCsvLimpio.equalsIgnoreCase(rutObjetoLimpio)) {
+                    return true;
+                }
+            }
+        }catch (IOException e) {
+            System.err.println("Error al leer el archivo de proveedores: " + e.getMessage());
+            return false;
+        }
         return false;
     }
 
