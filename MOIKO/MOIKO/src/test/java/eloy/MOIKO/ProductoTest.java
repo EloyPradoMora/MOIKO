@@ -52,8 +52,10 @@ public class ProductoTest {
     }
 
     @Test
-    void testStock(){
-        Assertions.assertTrue(p.getStock() instanceof Integer);
+    void testStockYPrecioConValoresNegativos() {
+        Producto productoInvalido = new Producto("COD", "Anillo Unico de Poder", -1, -1, "16.827.524-1", "gandalf@ainur.com");
+        assertFalse(productoInvalido.isStockValido());
+        assertFalse(productoInvalido.isPrecioValido());
     }
 
     @Test
